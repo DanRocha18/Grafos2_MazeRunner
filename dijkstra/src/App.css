@@ -1,0 +1,93 @@
+.App {
+  background: linear-gradient(to bottom, #105013, #032a54);
+  text-align: center;
+  height: 1080px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-image: url("/images/mzr4.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #eceee3;
+}
+
+.App-link {
+  color: #0e4581;
+}
+
+/* BodyComponent.css */
+.body {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 25px;
+}
+
+.centered-text1 {
+  font-family: 'Jockey One', sans-serif;
+  color: #eceee3;
+  font-size: 34px;
+  margin: 5px 0;
+}
+
+.centered-text2 {
+  font-family: 'Jockey One', sans-serif;
+  color: #eceee3;
+  font-size: 28px;
+  margin: 2px 0;
+
+}
+
+/*CSS DO LABIRINTO*/
+.maze {
+  padding-top: 2%;
+  margin-left: 170px;
+  display: grid;
+  grid-template-columns: repeat(10, 80px);
+  grid-template-rows: repeat(10, 40px);
+  width: 800px;
+  height: 400px;
+}
+
+.cell {
+  width: 80px;
+  height: 40px;
+  border: 2px solid #0e4581;
+  background-color: #000000;
+}
+
+.start {
+  background-color: #00f;
+}
+
+.end {
+  background-color: #0f0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Jockey One', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Jockey One'
+    monospace;
+} 
