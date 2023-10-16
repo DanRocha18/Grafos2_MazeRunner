@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import Grafo from "./djkistra"; // Certifique-se de que o caminho correto esteja importado
 
 class Maze extends Component {
   constructor(props) {
@@ -9,11 +10,28 @@ class Maze extends Component {
       playerX: 0,
       playerY: 0,
       shortestPath: [],
-      maze: [], // Representação do labirinto no cliente
+      startNodeX: 0,
+      startNodeY: 0,
+      endNodeX: 9, // Última coluna
+      endNodeY: 9, // Última linha
+      rows: 10,
+      columns: 10,
+      maze: new Grafo(10, 10), // Usamos a classe Grafo aqui
     };
 
     document.addEventListener("keydown", this.handleKeyPress);
   }
+
+  initializeMaze = () => {
+    this.state.maze = new Grafo(10, 10);
+    this.setState({ playerX: 0, playerY: 0, shortestPath: [] });
+  };
+
+  setStartNode = (x, y) => {
+    this.setState({ startNodeX: x, startNodeY: y }, () => {
+      this.findShortestPathDijkstra(); // Chama o cálculo do menor caminho quando o nó de partida é definido
+    });
+  };
 
   handleKeyPress = (e) => {
     let { playerX, playerY } = this.state;
@@ -46,66 +64,82 @@ class Maze extends Component {
     this.setState({ playerX, playerY });
   };
 
-  // Função para configurar o labirinto no servidor
-  setMazeOnServer = () => {
-    fetch("http://localhost:3001/setMaze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ maze: this.state.maze }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.message);
-      })
-      .catch((error) => console.error("Erro ao configurar o labirinto:", error));
+  animateShortestPath = () => {
+    const shortestPath = this.state.shortestPath;
+    const delay = 300; // Ajuste o atraso de animação conforme necessário
+
+    shortestPath.forEach((coord, index) => {
+      setTimeout(() => {
+        const [x, y] = coord;
+        this.setState({
+          maze: this.state.maze.map((row, i) =>
+            row.map((cell, j) => (i === y && j === x ? "path" : cell))
+          ),
+        });
+      }, index * delay);
+    });
   };
 
-  // Função para encontrar o caminho mínimo no labirinto
-  findShortestPath = () => {
-    const { playerX, playerY } = this.state;
-    fetch("http://localhost:3001/findPath", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ start: { x: playerX, y: playerY }, end: { x: 4, y: 4 } }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const path = data.path;
-        this.setState({ shortestPath: path });
-      })
-      .catch((error) => console.error("Erro ao encontrar o caminho mínimo:", error));
+  findShortestPathDijkstra = () => {
+    console.log("Encontrar Caminho Mínimo acionado.");
+    const { startNodeX, startNodeY } = this.state;
+    const shortestPath = this.state.maze.findShortestPath(
+      startNodeX,
+      startNodeY,
+      this.state.endNodeX,
+      this.state.endNodeY
+    );
+    console.log("Menor caminho: ", shortestPath);
+
+    // Animação do caminho mínimo
+    this.setState({ shortestPath: [] }, () => {
+      this.setState({ shortestPath });
+      this.animateShortestPath();
+    });
   };
 
-  // Função para renderizar o labirinto com o caminho mínimo
   renderMazeWithShortestPath = () => {
     const rows = 10;
     const columns = 10;
-
+  
     const maze = [];
     for (let i = 0; i < rows; i++) {
       const row = [];
       for (let j = 0; j < columns; j++) {
-        const isPath = this.state.shortestPath.some((coord) => coord[0] === j && coord[1] === i);
-        const cellClasses = `cell${i === 0 && j === 0 ? " start" : ""}${
-          i === rows - 1 && j === columns - 1 ? " end" : ""
-        }${i === this.state.playerY && j === this.state.playerX ? " player" : ""}${isPath ? " path" : ""}`;
-        row.push(<div key={`cell-${i}-${j}`} className={cellClasses}></div>);
+        const isPath = this.state.shortestPath.some(
+          (coord) => coord[0] === j && coord[1] === i
+        );
+        const isShortestPath = isPath && isPath.length > 0;
+  
+        const isStartNode = j === this.state.startNodeX && i === this.state.startNodeY;
+  
+        const cellClasses = `cell${isStartNode ? " start-node" : ""}${
+          i === 0 && j === 0 ? " start" : ""
+        }${i === rows - 1 && j === columns - 1 ? " end" : ""}${
+          i === this.state.playerY && j === this.state.playerX ? " player" : ""
+        }${isShortestPath ? " shortest-path-cell" : ""}`;
+  
+        row.push(
+          <div
+            key={`cell-${i}-${j}`}
+            className={cellClasses}
+            onClick={() => this.setStartNode(j, i)}
+          >
+            {isStartNode && <div className="start-node-marker">S</div>}
+          </div>
+        );
       }
       maze.push(<div key={`row-${i}`} className="row">{row}</div>);
     }
-
+  
     return <div className="maze">{maze}</div>;
   };
-
+  
+  
   render() {
     return (
       <div>
-        <button onClick={this.setMazeOnServer}>Configurar Labirinto no Servidor</button>
-        <button onClick={this.findShortestPath}>Encontrar Caminho Mínimo</button>
+        <button onClick={this.initializeMaze}>Reiniciar Labirinto</button>
         {this.renderMazeWithShortestPath()}
       </div>
     );

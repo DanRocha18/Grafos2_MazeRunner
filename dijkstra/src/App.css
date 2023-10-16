@@ -80,6 +80,16 @@
   background-color: #0f0;
 }
 
+.start-node {
+  background-color: #ffcc00; /* Define a cor de fundo desejada */
+  color: #fff; /* Define a cor do texto para garantir a legibilidade */
+}
+
+.shortest-path-cell {
+  background-color: #00ff00; /* Define a cor de fundo desejada para o caminho mais curto */
+  color: #fff; /* Define a cor do texto para garantir a legibilidade */
+}
+
 body {
   margin: 0;
   font-family: 'Jockey One', sans-serif;
