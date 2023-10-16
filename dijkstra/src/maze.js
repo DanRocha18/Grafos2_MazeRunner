@@ -20,7 +20,21 @@ class Maze extends Component {
     };
 
     document.addEventListener("keydown", this.handleKeyPress);
+
+    this.addRandomObstacles();
   }
+
+  addRandomObstacles = () => {
+    const { rows, columns, maze } = this.state;
+    const numObstacles = 10; // Defina o número de obstáculos desejado
+
+    for (let i = 0; i < numObstacles; i++) {
+      const randomX = Math.floor(Math.random() * columns);
+      const randomY = Math.floor(Math.random() * rows);
+
+      maze.setObstacle(randomX, randomY);
+    }
+  };
 
   initializeMaze = () => {
     this.state.maze = new Grafo(10, 10);
@@ -102,9 +116,11 @@ class Maze extends Component {
     const rows = 10;
     const columns = 10;
   
-    const maze = [];
+    const maze = this.state.maze.maze; // Obtenha a matriz de obstáculos do estado
+  
+    const mazeElements = [];
     for (let i = 0; i < rows; i++) {
-      const row = [];
+      const rowElements = [];
       for (let j = 0; j < columns; j++) {
         const isPath = this.state.shortestPath.some(
           (coord) => coord[0] === j && coord[1] === i
@@ -112,14 +128,15 @@ class Maze extends Component {
         const isShortestPath = isPath && isPath.length > 0;
   
         const isStartNode = j === this.state.startNodeX && i === this.state.startNodeY;
+        const isObstacle = maze[i][j] === 1; // Verifica se é um obstáculo
   
         const cellClasses = `cell${isStartNode ? " start-node" : ""}${
           i === 0 && j === 0 ? " start" : ""
         }${i === rows - 1 && j === columns - 1 ? " end" : ""}${
           i === this.state.playerY && j === this.state.playerX ? " player" : ""
-        }${isShortestPath ? " shortest-path-cell" : ""}`;
+        }${isShortestPath ? " shortest-path" : ""}${isObstacle ? " obstacle-cell" : ""}`;
   
-        row.push(
+        rowElements.push(
           <div
             key={`cell-${i}-${j}`}
             className={cellClasses}
@@ -129,10 +146,12 @@ class Maze extends Component {
           </div>
         );
       }
-      maze.push(<div key={`row-${i}`} className="row">{row}</div>);
+      mazeElements.push(
+        <div key={`row-${i}`} className="row">{rowElements}</div>
+      );
     }
   
-    return <div className="maze">{maze}</div>;
+    return <div className="maze">{mazeElements}</div>;
   };
   
   

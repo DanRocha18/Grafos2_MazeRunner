@@ -72,9 +72,6 @@
   background-color: #000000;
 }
 
-.start {
-  background-color: #00f;
-}
 
 .end {
   background-color: #0f0;
@@ -87,6 +84,11 @@
 
 .shortest-path-cell {
   background-color: #00ff00; /* Define a cor de fundo desejada para o caminho mais curto */
+  color: #fff; /* Define a cor do texto para garantir a legibilidade */
+}
+
+.obstacle-cell {
+  background-color: #ff0000; /* Define a cor de fundo para as células com obstáculos */
   color: #fff; /* Define a cor do texto para garantir a legibilidade */
 }
 
