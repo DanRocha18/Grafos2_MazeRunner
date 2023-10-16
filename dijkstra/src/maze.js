@@ -78,22 +78,6 @@ class Maze extends Component {
     this.setState({ playerX, playerY });
   };
 
-  animateShortestPath = () => {
-    const shortestPath = this.state.shortestPath;
-    const delay = 300; // Ajuste o atraso de animação conforme necessário
-
-    shortestPath.forEach((coord, index) => {
-      setTimeout(() => {
-        const [x, y] = coord;
-        this.setState({
-          maze: this.state.maze.map((row, i) =>
-            row.map((cell, j) => (i === y && j === x ? "path" : cell))
-          ),
-        });
-      }, index * delay);
-    });
-  };
-
   findShortestPathDijkstra = () => {
     console.log("Encontrar Caminho Mínimo acionado.");
     const { startNodeX, startNodeY } = this.state;
@@ -106,36 +90,33 @@ class Maze extends Component {
     console.log("Menor caminho: ", shortestPath);
 
     // Animação do caminho mínimo
-    this.setState({ shortestPath: [] }, () => {
-      this.setState({ shortestPath });
-      this.animateShortestPath();
-    });
+    this.setState({ shortestPath });
   };
 
   renderMazeWithShortestPath = () => {
     const rows = 10;
     const columns = 10;
-  
+
     const maze = this.state.maze.maze; // Obtenha a matriz de obstáculos do estado
-  
+
     const mazeElements = [];
     for (let i = 0; i < rows; i++) {
       const rowElements = [];
       for (let j = 0; j < columns; j++) {
-        const isPath = this.state.shortestPath.some(
-          (coord) => coord[0] === j && coord[1] === i
-        );
-        const isShortestPath = isPath && isPath.length > 0;
-  
         const isStartNode = j === this.state.startNodeX && i === this.state.startNodeY;
         const isObstacle = maze[i][j] === 1; // Verifica se é um obstáculo
-  
+
+        // Adicione a classe 'shortest-path' para o menor caminho
+        const isShortestPath = this.state.shortestPath.some(
+          (coord) => coord[0] === j && coord[1] === i
+        );
+
         const cellClasses = `cell${isStartNode ? " start-node" : ""}${
           i === 0 && j === 0 ? " start" : ""
         }${i === rows - 1 && j === columns - 1 ? " end" : ""}${
           i === this.state.playerY && j === this.state.playerX ? " player" : ""
-        }${isShortestPath ? " shortest-path" : ""}${isObstacle ? " obstacle-cell" : ""}`;
-  
+        }${isObstacle ? " obstacle-cell" : ""}${isShortestPath ? " shortest-path" : ""}`;
+
         rowElements.push(
           <div
             key={`cell-${i}-${j}`}
@@ -150,11 +131,10 @@ class Maze extends Component {
         <div key={`row-${i}`} className="row">{rowElements}</div>
       );
     }
-  
+
     return <div className="maze">{mazeElements}</div>;
   };
-  
-  
+
   render() {
     return (
       <div>
