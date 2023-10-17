@@ -13,6 +13,18 @@ class Grafo {
     }
   }
 
+  generateEmptyMaze(rows, columns) {
+    const maze = [];
+    for (let i = 0; i < rows; i++) {
+      maze.push(Array(columns).fill(0)); // Preenche a matriz com zeros
+    }
+    return maze;
+  }
+
+  resetMaze() {
+    this.maze = this.generateEmptyMaze(this.rows, this.columns);
+  }
+
   setObstacle(x, y) {
     if (x >= 0 && x < this.columns && y >= 0 && y < this.rows) {
       this.maze[y][x] = 1; // Set the node as an obstacle

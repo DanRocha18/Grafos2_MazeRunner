@@ -17,6 +17,7 @@ class Maze extends Component {
       rows: 10,
       columns: 10,
       maze: new Grafo(10, 10), // Usamos a classe Grafo aqui
+      showMessage: false,
     };
 
     document.addEventListener("keydown", this.handleKeyPress);
@@ -28,20 +29,36 @@ class Maze extends Component {
     const { rows, columns, maze } = this.state;
     const numObstacles = 10; // Defina o número de obstáculos desejado
 
-    for (let i = 0; i < numObstacles; i++) {
-      const randomX = Math.floor(Math.random() * columns);
-      const randomY = Math.floor(Math.random() * rows);
+    maze.resetMaze();
 
+    for (let i = 0; i < numObstacles; i++) {
+      let randomX, randomY;
+      
+      do {
+        randomX = Math.floor(Math.random() * columns);
+        randomY = Math.floor(Math.random() * rows);
+      } while ((randomX === 0 && randomY === 0) || (randomX === 9 && randomY === 9));
+  
       maze.setObstacle(randomX, randomY);
     }
   };
 
   initializeMaze = () => {
-    this.state.maze = new Grafo(10, 10);
-    this.setState({ playerX: 0, playerY: 0, shortestPath: [] });
+    this.setState({ playerX: 0, playerY: 0, shortestPath: [] }, () => {
+      this.addRandomObstacles(); // Embaralhe os obstáculos novamente
+      this.setState({startNodeX : 0 , startNodeY: 0});
+    });
   };
 
   setStartNode = (x, y) => {
+    if (this.state.maze.maze[y][x] === 1) {
+      // Se o nó clicado for um obstáculo, mostre a mensagem
+      this.setState({ showMessage: true });
+    } else {
+      // Caso contrário, esconda a mensagem
+      this.setState({ showMessage: false });
+    }
+
     this.setState({ startNodeX: x, startNodeY: y }, () => {
       this.findShortestPathDijkstra(); // Chama o cálculo do menor caminho quando o nó de partida é definido
     });
@@ -137,9 +154,16 @@ class Maze extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.initializeMaze}>Reiniciar Labirinto</button>
+      <div className="maze-container">
+        <button className="restart-buttom" onClick={this.initializeMaze}>
+          Reiniciar Labirinto
+        </button>
         {this.renderMazeWithShortestPath()}
+        <div className="message-container">
+          {this.state.showMessage && (
+            <div className="message">O Verdugo te encontrou, SAIA IMEDIATAMENTE!</div>
+          )}
+        </div>
       </div>
     );
   }

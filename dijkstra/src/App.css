@@ -68,17 +68,21 @@
 .cell {
   width: 80px;
   height: 40px;
-  border: 2px solid #0e4581;
-  background-color: #000000;
+  border: 2px solid #2c4c2a;
+  background-color: #686060;
 }
 
 
 .end {
-  background-color: #0f0;
+  background-image: url("/images/saída.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .start-node {
-  background-color: #ffcc00; /* Define a cor de fundo desejada */
+  background-image: url("/images/Maze-Runner2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   color: #fff; /* Define a cor do texto para garantir a legibilidade */
 }
 
@@ -87,12 +91,72 @@
   color: #fff; /* Define a cor do texto para garantir a legibilidade */
 }
 .shortest-path {
-  background-color: purple;
+  background-color: rgb(31, 68, 27);
 }
 
 .obstacle-cell {
-  background-color: #ff0000; /* Define a cor de fundo para as células com obstáculos */
+  background-image: url("/images/Verdugo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   color: #fff; /* Define a cor do texto para garantir a legibilidade */
+}
+
+.maze-container {
+  display: flex;
+  align-items:flex-start;
+}
+
+.message-container {
+  height: max-content;
+  width: fit-content;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px; /* Adicione margem à esquerda para separar o labirinto da mensagem */
+}
+
+.message {
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  margin-top: 10px;
+  animation: messageAnimation 1s infinite;
+}
+
+@keyframes messageAnimation {
+  0% {
+    color: #ffffff;
+    transform: scale(1);
+
+  }
+  50% {
+    color: #ff0000;
+    transform: scale(1.1);
+  }
+  100% {
+    color: #ffffff;
+    transform: scale(1);
+  }
+}
+
+.restart-buttom {
+  margin-top: 10px;
+  height: max-content;
+  width: max-content;
+  background-color: #363434; /* Define a cor de fundo para as células com obstáculos */
+  border-radius: 10px;
+  font-family: 'Jockey One', sans-serif;
+  color: #fff; /* Define a cor do texto para garantir a legibilidade */
+  animation: buttonAnimation 1s ease infinite;
+}
+
+@keyframes buttonAnimation {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+.restart-buttom:hover {
+  animation: none;
 }
 
 body {
@@ -108,7 +172,7 @@ code {
 } 
 
 .path {
-  animation: pathAnimation 0.5s ease;
+  animation: pathAnimation 2s ease;
   background-color: #fd439f;
 }
 @keyframes pathAnimation {
