@@ -13,11 +13,16 @@
 
 <p> Descrição do projeto </p>
 
-- Resumo do projeto "uma descrição sobre o que se trata o projeto escolhido"
+O projeto "Maze Runner - O Algoritmo Mortal" se trata de um projeto de algoritmo onde, aplicando Dijkstra, consegue se encontrar o menor caminho de qualquer ponto de um labirinto até a sua saída.
 
 ### Interface: 
 
-- Prints do projeto ficarão nessa seção
+![image](https://github.com/projeto-de-algoritmos/Grafos2_MazeRunner/assets/54143767/c5a7c80e-982c-412c-bde6-22c178732921)
+![image](https://github.com/projeto-de-algoritmos/Grafos2_MazeRunner/assets/54143767/0bf42d3c-530c-4b1a-92ef-2172e10c9e70)
+![image](https://github.com/projeto-de-algoritmos/Grafos2_MazeRunner/assets/54143767/7c4104f6-8b9c-4b6e-b544-711aff07ff62)
+![image](https://github.com/projeto-de-algoritmos/Grafos2_MazeRunner/assets/54143767/8383782e-3543-44fe-b9bc-b0d73cf13b45)
+
+
 
 ## ➿ Execução do Projeto
 
@@ -78,5 +83,5 @@ Para utilização do projeo acesse a página localmente, e selecione a matéria 
 
   | Conteúdo | Vídeo                                                                                         |
   | -------- | --------------------------------------------------------------------------------------------- |
-  | Módulo 1 |                                                          |
+  | Módulo 1 | [URL do vídeo]()                                                        |
  
