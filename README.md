@@ -77,11 +77,11 @@ $ npm run start
 ```
 
 ## ✔️ Utilização do projeto
-Para utilização do projeo acesse a página localmente, e selecione a matéria desejada para sua busca.
+Para utilização do projeo acesse a página localmente.
 
 ## 🔗 Apresentação
 
   | Conteúdo | Vídeo                                                                                         |
   | -------- | --------------------------------------------------------------------------------------------- |
-  | Módulo 1 | [URL do vídeo](https://unbbr.sharepoint.com/:v:/s/EuSozinho273/EQk5_NE5KBhGgtBl_dG217kBB9r6ZI8p1iqaI9dA9aOjfw?e=aQnVpW&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19)                                                        |
+  | Módulo 2 | [URL do vídeo](https://unbbr.sharepoint.com/:v:/s/EuSozinho273/EQk5_NE5KBhGgtBl_dG217kBB9r6ZI8p1iqaI9dA9aOjfw?e=aQnVpW&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19)                                                        |
  
